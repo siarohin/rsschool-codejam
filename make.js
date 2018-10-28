@@ -1,10 +1,14 @@
 function make(...args) {
+  let array = [];
 
-  if (typeof args[args.length - 1] === 'function') {
-    const func = args.pop();
-    return args.reduce((acc, el) => func(acc, el));
+  function func(...el) {
+    if (typeof el[0] === 'function') {
+      return array.reduce(el[0]);
+    }
+    array.push(...el);
+    return func;
   }
 
-  return make.bind(null, ...args);
+  return func(...args);
 
-}
+};
